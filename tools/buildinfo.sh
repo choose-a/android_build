@@ -60,4 +60,7 @@ if [ -n "$BUILD_THUMBPRINT" ] ; then
 fi
 echo "ro.build.characteristics=$TARGET_AAPT_CHARACTERISTICS"
 
+# Choose-a properties
+echo "ro.choose-a.device=$CHOOSE_DEVICE"
+
 echo "# end build properties"
