@@ -564,6 +564,7 @@ function brunch()
 function breakfast()
 {
     target=$1
+    local variant=$2
     CUSTOM_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
@@ -583,8 +584,11 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the choose-a model name
-            lunch choose_$target-userdebug
+            # This is probably just the omni model name
+            if [ -z "$variant" ]; then
+                variant="userdebug"
+            fi
+            lunch choose_$target-$variant
         fi
     fi
     return $?
