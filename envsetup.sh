@@ -129,14 +129,6 @@ function check_product()
         echo "Couldn't locate the top of the tree.  Try setting TOP." >&2
         return
     fi
-
-    if (echo -n $1 | grep -q -e "^choose_") ; then
-       CUSTOM_BUILD=$(echo -n $1 | sed -e 's/^choose_//g')
-    else
-       CUSTOM_BUILD=
-    fi
-    export CUSTOM_BUILD
-
         TARGET_PRODUCT=$1 \
         TARGET_BUILD_VARIANT= \
         TARGET_BUILD_TYPE= \
@@ -584,7 +576,7 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the omni model name
+            # This is probably just the choose-a model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
@@ -674,6 +666,13 @@ function lunch()
         echo
         return 1
     fi
+
+    if (echo -n $product | grep -q -e "^choose_") ; then
+       CUSTOM_BUILD=$(echo -n $product | sed -e 's/^choose_//g')
+    else
+       CUSTOM_BUILD=
+    fi
+    export CUSTOM_BUILD
 
     export TARGET_PRODUCT=$product
     export TARGET_BUILD_VARIANT=$variant
