@@ -55,4 +55,7 @@ if [ -n "$BUILD_THUMBPRINT" ] ; then
   echo "ro.build.thumbprint=$BUILD_THUMBPRINT"
 fi
 
+# Choose-A properties
+echo "ro.choose.device=$CHOOSE_DEVICE"
+
 echo "# end build properties"
