@@ -130,8 +130,8 @@ function check_product()
         return
     fi
 
-    if (echo -n $1 | grep -q -e "^custom_") ; then
-       CUSTOM_BUILD=$(echo -n $1 | sed -e 's/^custom_//g')
+    if (echo -n $1 | grep -q -e "^choose_") ; then
+       CUSTOM_BUILD=$(echo -n $1 | sed -e 's/^choose_//g')
     else
        CUSTOM_BUILD=
     fi
@@ -567,7 +567,7 @@ function breakfast()
     CUSTOM_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
-    for f in `/bin/ls vendor/custom/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/choose-a/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -583,8 +583,8 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the custom model name
-            lunch custom_$target-userdebug
+            # This is probably just the choose-a model name
+            lunch choose_$target-userdebug
         fi
     fi
     return $?
