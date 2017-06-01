@@ -84,7 +84,7 @@ def search_gerrit_for_device(device):
 
 
 def parse_device_directory(device_url, device):
-    pattern = "^android_device_(?P<vendor>.+)_{}$".format(device)
+    pattern = "^choose-a/android_device_(?P<vendor>.+)_{}$".format(device)
     match = re.match(pattern, device_url)
 
     if match is None:
