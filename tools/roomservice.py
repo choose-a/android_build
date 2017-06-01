@@ -38,7 +38,7 @@ except ImportError:
 # set this to the default remote to use in repo
 default_rem = "choose-a"
 # set this to the default revision to use (branch/tag name)
-default_rev = "android-7.1"
+default_rev = "choose-7.1"
 # set this to the remote that you use for projects from your team repos
 # example fetch="https://github.com/choose-a"
 default_team_rem = "choose-a"
@@ -50,8 +50,11 @@ android_team = "choose-a"
 gerrit_url = "review.choose-a.name"
 
 
+def urldecode(s):
+    return urllib2.unquote(s).decode('utf8')
+
 def check_repo_exists(git_data, device):
-    re_match = "^choose-a/android_device_.*_{device}$".format(device=device)
+    re_match = "^choose.*android_device_.*_{device}$".format(device=device)
     matches = filter(lambda x: re.match(re_match, x), git_data)
     if len(matches) != 1:
         raise Exception("{device} not found,"
@@ -62,7 +65,7 @@ def check_repo_exists(git_data, device):
 
 def search_gerrit_for_device(device):
     # TODO: In next gerrit release regex search with r= should be supported!
-    git_search_url = "https://{gerrit_url}/projects/?m={device}".format(
+    git_search_url = "https://{gerrit_url}/projects/?r=choose.*{device}".format(
         gerrit_url=gerrit_url,
         device=device
     )
@@ -84,7 +87,7 @@ def search_gerrit_for_device(device):
 
 
 def parse_device_directory(device_url, device):
-    pattern = "^android_device_(?P<vendor>.+)_{}$".format(device)
+    pattern = "^choose.*android_device_(?P<vendor>.+)_{}$".format(device)
     match = re.match(pattern, device_url)
 
     if match is None:
@@ -184,7 +187,7 @@ def write_to_manifest(manifest):
 def parse_device_from_manifest(device):
     for project in iterate_manifests():
         name = project.get('name')
-        if name.startswith("android_device_") and name.endswith(device):
+        if name.startswith("choose-a/android_device_") and name.endswith(device):
             return project.get('path')
     return None
 
@@ -256,7 +259,7 @@ def create_dependency_manifest(dependencies):
         if remote == "github":
             if "/" not in repository:
                 repository = '/'.join([android_team, repository])
-        project = create_manifest_project(repository,
+        project = create_manifest_project(urldecode(repository),
                                           target_path,
                                           remote=remote,
                                           revision=revision)
@@ -322,7 +325,7 @@ def fetch_device(device):
     if git_data is not None:
         device_url = git_data['id']
         device_dir = parse_device_directory(device_url, device)
-        project = create_manifest_project(device_url,
+        project = create_manifest_project(urldecode(device_url),
                                       device_dir,
                                       remote=default_team_rem)
         if project is not None:
