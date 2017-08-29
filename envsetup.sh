@@ -572,7 +572,7 @@ function breakfast()
     CUSTOM_DEVICES_ONLY="true"
     unset LUNCH_MENU_CHOICES
     add_lunch_combo full-eng
-    for f in `/bin/ls vendor/omni/vendorsetup.sh 2> /dev/null`
+    for f in `/bin/ls vendor/choose-a/vendorsetup.sh 2> /dev/null`
         do
             echo "including $f"
             . $f
@@ -588,11 +588,11 @@ function breakfast()
             # A buildtype was specified, assume a full device name
             lunch $target
         else
-            # This is probably just the omni model name
+            # This is probably just the choose-a model name
             if [ -z "$variant" ]; then
                 variant="userdebug"
             fi
-            lunch omni_$target-$variant
+            lunch choose_$target-$variant
         fi
     fi
     return $?
@@ -679,15 +679,15 @@ function lunch()
         return 1
     fi
 
-    if (echo -n $product | grep -q -e "^omni_") ; then
-       CUSTOM_BUILD=$(echo -n $product | sed -e 's/^omni_//g')
+    if (echo -n $product | grep -q -e "^choose_") ; then
+       CUSTOM_BUILD=$(echo -n $product | sed -e 's/^choose_//g')
     else
        CUSTOM_BUILD=
     fi
     export CUSTOM_BUILD
 
-    export TARGET_PRODUCT=$product
-    export TARGET_BUILD_VARIANT=$variant
+    export TARGET_PRODUCT=$(get_build_var TARGET_PRODUCT)
+    export TARGET_BUILD_VARIANT=$(get_build_var TARGET_BUILD_VARIANT)
     export TARGET_PLATFORM_VERSION=$(get_build_var TARGET_PLATFORM_VERSION)
     export TARGET_BUILD_TYPE=release
 
