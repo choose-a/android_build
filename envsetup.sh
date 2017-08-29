@@ -1628,7 +1628,7 @@ function mka() {
             make -j `sysctl hw.ncpu|cut -d" " -f2` "$@"
             ;;
         *)
-            schedtool -B -n 1 -e ionice -n 1 make -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@"
+            schedtool -B -n 10 -e ionice -n 7 make -j `cat /proc/cpuinfo | grep "^processor" | wc -l` "$@"
             ;;
     esac
 }
