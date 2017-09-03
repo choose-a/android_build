@@ -2502,11 +2502,11 @@ INTERNAL_OTA_PACKAGE_TARGET := $(PRODUCT_OUT)/$(name).zip
 
 $(INTERNAL_OTA_PACKAGE_TARGET): KEY_CERT_PAIR := $(DEFAULT_KEY_CERT_PAIR)
 
-ifneq ($(CUSTOM_BUILD),)
-    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
-else
+#ifneq ($(CUSTOM_BUILD),)
+#    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
+#else
     $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
-endif
+#endif
 
 ifneq ($(TARGET_UNIFIED_DEVICE),)
     $(INTERNAL_OTA_PACKAGE_TARGET): override_prop := --override_prop=true
