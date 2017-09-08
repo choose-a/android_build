@@ -23,7 +23,7 @@ Invoke ". build/envsetup.sh" from your shell to add the following functions to y
 
 EOF
 
-    __print_omni_functions_help
+    __print_choose_functions_help
 
 cat <<EOF
 
@@ -37,7 +37,7 @@ EOF
     local T=$(gettop)
     local A=""
     local i
-    for i in `cat $T/build/envsetup.sh $T/vendor/omni/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
+    for i in `cat $T/build/envsetup.sh $T/vendor/choose-a/build/envsetup.sh | sed -n "/^[[:blank:]]*function /s/function \([a-z_]*\).*/\1/p" | sort | uniq`; do
       A="$A $i"
     done
     echo $A
@@ -48,8 +48,8 @@ function build_build_var_cache()
 {
     local T=$(gettop)
     # Grep out the variable names from the script.
-    cached_vars=`cat $T/build/envsetup.sh $T/vendor/omni/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`
-    cached_abs_vars=`cat $T/build/envsetup.sh $T/vendor/omni/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_abs_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`
+    cached_vars=`cat $T/build/envsetup.sh $T/vendor/choose-a/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`
+    cached_abs_vars=`cat $T/build/envsetup.sh $T/vendor/choose-a/build/envsetup.sh | tr '()' '  ' | awk '{for(i=1;i<=NF;i++) if($i~/get_abs_build_var/) print $(i+1)}' | sort -u | tr '\n' ' '`
     # Call the build system to dump the "<val>=<value>" pairs as a shell script.
     build_dicts_script=`\cd $T; CALLED_FROM_SETUP=true BUILD_SYSTEM=build/core \
                         command make --no-print-directory -f build/core/config.mk \
@@ -613,13 +613,13 @@ function lunch()
         # if we can't find the product, try to grab it from our github
         T=$(gettop)
         pushd $T > /dev/null
-        vendor/omni/build/tools/roomservice.py $product
+        vendor/choose-a/build/tools/roomservice.py $product
         popd > /dev/null
         check_product $product
     else
         T=$(gettop)
         pushd $T > /dev/null
-        vendor/omni/build/tools/roomservice.py $product true
+        vendor/choose-a/build/tools/roomservice.py $product true
         popd > /dev/null
     fi
     if [ $? -ne 0 ]
@@ -636,8 +636,8 @@ function lunch()
         return 1
     fi
 
-    if (echo -n $product | grep -q -e "^omni_") ; then
-       CUSTOM_BUILD=$(echo -n $product | sed -e 's/^omni_//g')
+    if (echo -n $product | grep -q -e "^choose_") ; then
+       CUSTOM_BUILD=$(echo -n $product | sed -e 's/^choose_//g')
     else
        CUSTOM_BUILD=
     fi
@@ -1712,4 +1712,4 @@ addcompletions
 
 export ANDROID_BUILD_TOP=$(gettop)
 
-. $ANDROID_BUILD_TOP/vendor/omni/build/envsetup.sh
+. $ANDROID_BUILD_TOP/vendor/choose-a/build/envsetup.sh
