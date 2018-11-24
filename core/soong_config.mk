@@ -144,6 +144,7 @@ $(call add_json_list, NamespacesToExport,                $(PRODUCT_SOONG_NAMESPA
 $(call add_json_list, PgoAdditionalProfileDirs,          $(PGO_ADDITIONAL_PROFILE_DIRS))
 
 $(call add_json_bool, Target_init_vendor_lib,            $(if $(TARGET_INIT_VENDOR_LIB), true))
+$(call add_json_bool, Target_legacy_mutex_handle,        $(filter true,$(TARGET_NEEDS_LEGACY_MUTEX_HANDLE)))
 
 _contents := $(_contents)    "VendorVars": {$(newline)
 $(foreach namespace,$(SOONG_CONFIG_NAMESPACES),\
