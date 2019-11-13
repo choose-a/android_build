@@ -156,6 +156,8 @@ _contents := $(_contents)$(if $(strip $(SOONG_CONFIG_NAMESPACES)),__SV_END)    }
 
 _contents := $(subst $(comma)$(newline)__SV_END,$(newline),$(_contents)__SV_END}$(newline))
 
+include vendor/choose-a/build/soong/soong_config.mk
+
 $(file >$(SOONG_VARIABLES).tmp,$(_contents))
 
 $(shell if ! cmp -s $(SOONG_VARIABLES).tmp $(SOONG_VARIABLES); then \
