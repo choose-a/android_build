@@ -22,7 +22,7 @@ ifeq ($(WRITE_SOONG_VARIABLES),true)
 $(shell mkdir -p $(dir $(SOONG_VARIABLES)))
 $(call json_start)
 
-include vendor/choose/build/soong/soong_config.mk
+include vendor/choose-a/build/soong/soong_config.mk
 
 $(call add_json_str,  Make_suffix, -$(TARGET_PRODUCT))
 
