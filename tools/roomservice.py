@@ -45,7 +45,7 @@ default_team_rem = "choose"
 # this shouldn't change unless google makes changes
 local_manifest_dir = ".repo/local_manifests"
 # change this to your name on github (or equivalent hosting)
-android_team = "ChooseROM"
+android_team = "choose-a"
 # url to gerrit repository
 gerrit_url = "review.choose-a.name"
 
@@ -213,7 +213,7 @@ def parse_device_from_folder(device):
 
 
 def parse_dependency_file(location):
-    dep_file = "choose.dependencies"
+    dep_file = "repo.dependencies"
     dep_location = '/'.join([location, dep_file])
     if not os.path.isfile(dep_location):
         print("WARNING: %s file not found" % dep_location)
@@ -275,7 +275,7 @@ def create_dependency_manifest(dependencies):
 
 
 def create_common_dependencies_manifest(dependencies):
-    dep_file = "choose.dependencies"
+    dep_file = "repo.dependencies"
     common_list = []
     if dependencies is not None:
         for dependency in dependencies:
