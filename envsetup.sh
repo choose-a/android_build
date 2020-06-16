@@ -149,7 +149,6 @@ function check_product()
 
     if (echo -n $1 | grep -q -e "^choose_") ; then
         CHOOSE_BUILD=$(echo -n $1 | sed -e 's/^choose_//g')
-        export BUILD_NUMBER=$((date +%s%N ; echo $CHOOSE_BUILD; hostname) | openssl sha1 | sed -e 's/.*=//g; s/ //g' | cut -c1-10)
     else
         CHOOSE_BUILD=
     fi
