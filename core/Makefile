@@ -4281,7 +4281,6 @@ ifneq ($(BOARD_SUPER_PARTITION_GROUPS),)
 endif # BOARD_SUPER_PARTITION_GROUPS
 
 # Export signing properties on Choose Builds
-ifneq ($(CHOOSE_BUILD),)
 	$(shell echo "CHOOSE_BUILD=$(CHOOSE_BUILD)" > $(PRODUCT_OUT)/signing.props)
 	$(shell echo "TARGET_OTA_ASSERT_DEVICE=$(TARGET_OTA_ASSERT_DEVICE)" >> $(PRODUCT_OUT)/signing.props)
 	$(shell echo "TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT=$(TARGET_RELEASETOOL_OTA_FROM_TARGET_SCRIPT)" >> $(PRODUCT_OUT)/signing.props)
@@ -4289,7 +4288,6 @@ ifneq ($(CHOOSE_BUILD),)
 	$(shell echo "TARGET_SETS_FSTAB=$(TARGET_SETS_FSTAB)" >> $(PRODUCT_OUT)/signing.props)
 	$(shell echo "CHOOSE_VERSION=$(CHOOSE_VERSION)" >> $(PRODUCT_OUT)/signing.props)
 	$(shell echo "TARGET_RELEASETOOL_OTA_FROM_TARGET_ADDITIONAL_ARGS=$(TARGET_RELEASETOOL_OTA_FROM_TARGET_ADDITIONAL_ARGS)" >> $(PRODUCT_OUT)/signing.props)
-endif
 
 	@# TODO(b/134525174): Remove `-r` after addressing the issue with recovery patch generation.
 	$(hide) PATH=$(foreach p,$(INTERNAL_USERIMAGES_BINARY_PATHS),$(p):)$$PATH MKBOOTIMG=$(MKBOOTIMG) \
@@ -4386,11 +4384,7 @@ else
     $(INTERNAL_OTA_PACKAGE_TARGET): mount_by_label := false
 endif
 
-ifneq ($(CHOOSE_BUILD),)
-    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
-else
-    $(INTERNAL_OTA_PACKAGE_TARGET): backuptool := false
-endif
+$(INTERNAL_OTA_PACKAGE_TARGET): backuptool := true
 
 $(INTERNAL_OTA_PACKAGE_TARGET): $(BUILT_TARGET_FILES_PACKAGE) \
 	    $(OTA_FROM_TARGET_SCRIPT)
