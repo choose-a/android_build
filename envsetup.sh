@@ -218,12 +218,12 @@ function crremote()
         echo Unable to set up the git remote, are you in the root of the repo?
         return 0
     fi
-    CRUSER=`git config --get review.review.choose-a.name.username`
+    CRUSER=`git config --get review.gerrit.castricum.nu.username`
     if [ -z "$CRUSER" ]
     then
-        git remote add crremote ssh://review.choose-a.name:29418/$GERRIT_REMOTE
+        git remote add crremote ssh://gerrit.castricum.nu:29418/$GERRIT_REMOTE
     else
-        git remote add crremote ssh://$CRUSER@review.choose-a.name:29418/$GERRIT_REMOTE
+        git remote add crremote ssh://$CRUSER@gerrit.castricum.nu:29418/$GERRIT_REMOTE
     fi
     echo You can now push to "crremote".
  }
